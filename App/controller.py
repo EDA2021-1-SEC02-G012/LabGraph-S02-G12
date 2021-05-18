@@ -26,6 +26,7 @@
 
 import config as cf
 from App import model
+import time
 import csv
 
 """
@@ -111,7 +112,13 @@ def minimumCostPaths(analyzer, initialStation):
     Calcula todos los caminos de costo minimo de initialStation a todas
     las otras estaciones del sistema
     """
-    return model.minimumCostPaths(analyzer, initialStation)
+    delta_time = -1.0
+    start_time = getTime()
+    result = model.minimumCostPaths(analyzer, initialStation)
+    stop_time = getTime()
+    delta_time = stop_time - start_time
+    return result, delta_time
+
 
 
 def hasPath(analyzer, destStation):
@@ -119,13 +126,22 @@ def hasPath(analyzer, destStation):
     Informa si existe un camino entre initialStation y destStation
     """
     return model.hasPath(analyzer, destStation)
+    
 
 
 def minimumCostPath(analyzer, destStation):
     """
     Retorna el camino de costo minimo desde initialStation a destStation
     """
-    return model.minimumCostPath(analyzer, destStation)
+
+    delta_time = -1.0
+    start_time = getTime()
+
+    result =  model.minimumCostPath(analyzer, destStation)
+
+    stop_time = getTime()
+    delta_time = stop_time - start_time
+    return result, delta_time
 
 
 def servedRoutes(analyzer):
@@ -134,3 +150,11 @@ def servedRoutes(analyzer):
     """
     maxvert, maxdeg = model.servedRoutes(analyzer)
     return maxvert, maxdeg
+
+
+
+def getTime():
+    """
+    devuelve el instante tiempo de procesamiento en milisegundos
+    """
+    return float(time.perf_counter()*1000)
